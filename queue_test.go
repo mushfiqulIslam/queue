@@ -2,6 +2,7 @@ package queue
 
 import "testing"
 
+// Test Cases
 func TestQueue_EnqueueInt(t *testing.T) {
 	var q Queue
 	q.Enqueue(5)
@@ -62,5 +63,24 @@ func TestQueue_IsEmpty(t *testing.T) {
 	q.Enqueue(8)
 	if q.Len() != 1 {
 		t.Error("q.Len() returns Wrong value, Expected 1")
+	}
+}
+
+// Benchmark Tests
+func BenchmarkQueue_Enqueue(b *testing.B) {
+	var q Queue
+	for i := 0; i < b.N; i++ {
+		q.Enqueue(i)
+	}
+}
+
+func BenchmarkQueue_Dequeue(b *testing.B) {
+	var q Queue
+	for i := 0; i < b.N; i++ {
+		q.Enqueue(i)
+	}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_ = q.Dequeue()
 	}
 }
